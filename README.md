@@ -64,4 +64,4 @@ For more details, please refers to our [contributing file](.github/CONTRIBUTING/
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT](./LICENSE)
