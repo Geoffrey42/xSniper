@@ -51,7 +51,7 @@ Options:
 
 #### Cell mode
 
-![cell mode](./assets/xSniper_charts_00.svg)
+![cell mode](./assets/xSniper_charts_00.png)
 
 ## Contributing
 
