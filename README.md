@@ -16,16 +16,16 @@ virtualenv venv
 source venv/bin/activate
 ```
 
-The first time, run:
-
-```bash
-pip install -r requirements.txt
-```
-
 You should now see your prompt prefixed by:
 
 ```bash
 (venv) $
+```
+
+The first time, run:
+
+```bash
+pip install -r requirements.txt
 ```
 
 ## Usage
