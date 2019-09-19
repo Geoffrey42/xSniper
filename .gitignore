@@ -106,3 +106,4 @@ venv.bak/
 # misc
 *.sw*
 DS_Store
+.vscode/
