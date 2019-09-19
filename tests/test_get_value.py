@@ -1,57 +1,57 @@
 # -*- coding: utf-8 -*-
 
-from .context import xSniper
+from .context import xsniper
 
 import pytest
 from io import StringIO
 
 
 @pytest.fixture
-def setCSVFile():
+def set_csv_file():
     inMemoryCSV = StringIO("""\
 header1,header2,
 cell1,cell2,cell3
 cell4,,cell6""")
 
-    return xSniper.CSVFile(inMemoryCSV)
+    return xsniper.CSVFile(inMemoryCSV)
 
-def test_get_value(setCSVFile):
+def test_get_value(set_csv_file):
     """ Should return value from correct row and header """
-    target = setCSVFile
-    value = target.getValue("cell1", "header2")
+    target = set_csv_file
+    value = target.get_value("cell1", "header2")
 
     assert value == "cell2"
 
-def test_get_empty_value(setCSVFile):
+def test_get_empty_value(set_csv_file):
     """ Should return empty value as well """
-    target = setCSVFile
-    value = target.getValue("cell4", "header2")
+    target = set_csv_file
+    value = target.get_value("cell4", "header2")
 
     assert value == ""
 
-def test_get_from_empty_cell(setCSVFile):
+def test_get_from_empty_cell(set_csv_file):
     """ Should return from empty cell as well """
-    target = setCSVFile
-    value = target.getValue("", "header1")
+    target = set_csv_file
+    value = target.get_value("", "header1")
 
     assert value == "cell4"
 
-def test_raise_if_empty_header(setCSVFile):
+def test_raise_if_empty_header(set_csv_file):
     """ Should raise an exception if header argument is an empty string """
-    target = setCSVFile
+    target = set_csv_file
     with pytest.raises(ValueError):
-        target.getValue("cell1", "")
+        target.get_value("cell1", "")
 
-def test_raise_if_cell_arg_not_found(setCSVFile):
+def test_raise_if_cell_arg_not_found(set_csv_file):
     """ Should raise an exception if cell argument is not found """
 
-    target = setCSVFile
+    target = set_csv_file
     with pytest.raises(ValueError):
-        target.getValue("unknownCell", "header2")
+        target.get_value("unknownCell", "header2")
 
-def test_raise_if_header_arg_not_found(setCSVFile):
+def test_raise_if_header_arg_not_found(set_csv_file):
     """ Should raise an exception if header argument is not found """
 
-    target = setCSVFile
+    target = set_csv_file
     with pytest.raises(ValueError):
-        target.getValue("cell1", "unknownHeader")
+        target.get_value("cell1", "unknownHeader")

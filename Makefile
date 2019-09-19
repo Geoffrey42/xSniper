@@ -7,4 +7,7 @@ test: FORCE
 cov:
 	pytest --cov=xSniper tests
 
+lint:
+	pylint xsniper/*.py
+
 FORCE:
