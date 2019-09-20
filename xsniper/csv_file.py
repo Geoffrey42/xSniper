@@ -12,25 +12,18 @@ class CSVFile:
         csvFile: a simple csv reader or can be an io.StringIO.
     """
     def __init__(self, csvFile):
-        self.content = csv.reader(csvFile)
 
     def __get_header_index(self, header):
         if header == "":
             raise ValueError
-        headers = iter(self.content).__next__()
-        for index, element in enumerate(headers):
-            print(element)
-            if header == element:
-                return index
-        raise ValueError
 
     def get_value(self, cell, header):
         """Get a value (a cell) from its header and
         any other cell in the same row.
 
         Args:
-            cell: Any cell in targeted value's same row.
-            header: Targeted value's header.
+            cell: Any cell in targeted value's same row. Must not be empty.
+            header: Targeted value's header. Must not be empty.
 
         Returns:
             A string corresponding to the targeted value.
