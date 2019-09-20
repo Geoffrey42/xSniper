@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=redefined-outer-name
 
 """Get value tests suite."""
 

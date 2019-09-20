@@ -8,6 +8,6 @@ cov:
 	pytest --cov=xSniper tests
 
 lint:
-	pylint xsniper/*.py tests/test*.py
+	pylint xsniper/*.py
 
 FORCE:
