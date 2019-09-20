@@ -59,3 +59,8 @@ class CSVFile:
             ValueError: if cell is incorrect or header an empty
             string.
         """
+
+        header_index = self.__get_header_index(header)
+        for row in self.content:
+            if cell in row:
+                row[header_index] = value
