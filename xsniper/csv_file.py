@@ -44,7 +44,21 @@ class CSVFile:
         except ValueError as error:
             raise error
 
-        for row in self.csv_file:
+        for row in self.content:
             if cell in row:
                 return row[header_index]
         raise ValueError
+
+    def add_value(self, cell, header):
+        """Add a value (a cell) based on another cell in the same row
+        and its header.
+
+        Args:
+            cell: Any cell in targeted value's same row.
+            header: Targeted value's header.
+
+        Raises:
+            ValueError: if cell is incorrect or header an empty
+            string.
+        """
+        pass
