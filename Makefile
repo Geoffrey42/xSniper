@@ -1,13 +1,20 @@
 build:
-	pip install -r requirements.txt
+	@pip install -r requirements.txt
 
 test: FORCE
-	pytest -v
+	@pytest -v
 
 cov:
-	pytest --cov=xSniper tests
+	@pytest --cov-report term-missing --cov=xsniper tests
 
+report: generate
+	@pytest --cov-report annotate:reports --cov=xsniper tests
+	@rm reports/xsniper___init__.py,cover
+	@cat reports/*.py,cover
+
+generate:
+	@mkdir reports
 lint:
-	pylint xsniper/*.py tests/test*.py
+	@pylint xsniper/*.py
 
 FORCE:

@@ -107,3 +107,4 @@ venv.bak/
 *.sw*
 DS_Store
 .vscode/
+reports
