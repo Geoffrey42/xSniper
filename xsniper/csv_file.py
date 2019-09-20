@@ -49,9 +49,9 @@ class CSVFile:
                 return row[header_index]
         raise ValueError
 
-    def add_value(self, cell, header):
+    def add_value(self, cell, header, value):
         """Add a value (a cell) based on another cell in the same row
-        and its header.
+        and value's header.
 
         Args:
             cell: Any cell in targeted value's same row.
@@ -61,4 +61,3 @@ class CSVFile:
             ValueError: if cell is incorrect or header an empty
             string.
         """
-        pass
