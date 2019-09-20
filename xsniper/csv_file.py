@@ -39,12 +39,13 @@ class CSVFile:
             ValueError: if cell is incorrect or header an empty
             string.
         """
+        if cell == "":
+            raise ValueError
         try:
             header_index = self.__get_header_index(header)
         except ValueError as error:
             raise error
 
-        for row in self.content:
             if cell in row:
                 return row[header_index]
         raise ValueError

@@ -10,10 +10,10 @@ from .context import xsniper
 def set_csv_file():
     """Instantiate CSVFile object as a setup for every test."""
     in_memory_csv = StringIO("""\
-header1,header2,
-cell1,cell2,cell3
-cell4,,cell6""")
-
+header1,header2,header3
+cell1,cell2,
+cell4,cell5,cell6
+cell7,,cell9""")
     return xsniper.CSVFile(in_memory_csv)
 
 def test_get_value(set_csv_file):
@@ -26,16 +26,15 @@ def test_get_value(set_csv_file):
 def test_get_empty_value(set_csv_file):
     """ Should return empty value as well """
     target = set_csv_file
-    value = target.get_value("cell4", "header2")
+    value = target.get_value("cell7", "header2")
 
     assert value == ""
 
-def test_get_from_empty_cell(set_csv_file):
+def test_raise_if_empty_cell(set_csv_file):
     """ Should return from empty cell as well """
     target = set_csv_file
-    value = target.get_value("", "header1")
-
-    assert value == "cell4"
+    with pytest.raises(ValueError):
+        target.get_value("", "header1")
 
 def test_raise_if_empty_header(set_csv_file):
     """ Should raise an exception if header argument is an empty string """
