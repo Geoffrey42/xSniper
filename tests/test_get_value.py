@@ -1,19 +1,21 @@
 # -*- coding: utf-8 -*-
+# pylint: disable=redefined-outer-name
 
-from .context import xsniper
+"""Get value tests suite."""
 
-import pytest
 from io import StringIO
-
+import pytest
+from .context import xsniper
 
 @pytest.fixture
 def set_csv_file():
-    inMemoryCSV = StringIO("""\
+    """Instantiate CSVFile object as a setup for every test."""
+    in_memory_csv = StringIO("""\
 header1,header2,
 cell1,cell2,cell3
 cell4,,cell6""")
 
-    return xsniper.CSVFile(inMemoryCSV)
+    return xsniper.CSVFile(in_memory_csv)
 
 def test_get_value(set_csv_file):
     """ Should return value from correct row and header """
