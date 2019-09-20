@@ -12,12 +12,12 @@ class CSVFile:
         csvFile: a simple csv reader or can be an io.StringIO.
     """
     def __init__(self, csvFile):
-        self.csv_file = csv.reader(csvFile)
+        self.content = csv.reader(csvFile)
 
     def __get_header_index(self, header):
         if header == "":
             raise ValueError
-        headers = iter(self.csv_file).__next__()
+        headers = iter(self.content).__next__()
         for index, element in enumerate(headers):
             print(element)
             if header == element:
