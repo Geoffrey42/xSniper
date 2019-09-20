@@ -16,16 +16,16 @@ virtualenv venv
 source venv/bin/activate
 ```
 
-The first time, run:
-
-```bash
-pip install -r requirements.txt
-```
-
 You should now see your prompt prefixed by:
 
 ```bash
 (venv) $
+```
+
+The first time, run:
+
+```bash
+pip install -r requirements.txt
 ```
 
 ## Usage
@@ -34,7 +34,7 @@ You should now see your prompt prefixed by:
 
 ```text
 Usage:
-    xSniper cell <src.csv> <target.csv> <common-key> [--target-header=<key-header>] (<value-header> | --new-header=<name> [--output=<output.csv> | -o=<output.csv>]
+    xSniper cell <src.csv> <target.csv> <common-key> [--target-header=<key-header>] (<value-header> | --new-header=<name>) [--output=<output.csv> | -o=<output.csv>]
     xSniper column <src.csv> <target.csv> (<target-header>... | -a | --all) [--output=<output.csv> | -o=<output.csv>]
     xSniper (--help | -h)
     xSniper (--version | -v)
