@@ -12,10 +12,13 @@ class CSVFile:
         csvFile: a simple csv reader or can be an io.StringIO.
     """
     def __init__(self, csvFile):
+        self.content = list(csv.reader(csvFile))
 
     def __get_header_index(self, header):
         if header == "":
             raise ValueError
+        headers = self.content[0]
+        return headers.index(header)
 
     def get_value(self, cell, header):
         """Get a value (a cell) from its header and
@@ -39,6 +42,7 @@ class CSVFile:
         except ValueError as error:
             raise error
 
+        for row in self.content[1:]:
             if cell in row:
                 return row[header_index]
         raise ValueError
