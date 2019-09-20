@@ -20,5 +20,5 @@ def test_add_value(set_csv_file):
     got = set_csv_file
     want = "cell3"
     got.add_value("cell1", "header3", want)
-    
+
     assert got.get_value("cell1", "header3") == want
