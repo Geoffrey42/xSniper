@@ -1,6 +1,8 @@
 # xSniper
 
+[![Build Status](https://travis-ci.org/Geoffrey42/xSniper.svg?branch=develop)](https://travis-ci.org/Geoffrey42/xSniper)
 [![codecov](https://codecov.io/gh/Geoffrey42/xSniper/branch/develop/graph/badge.svg)](https://codecov.io/gh/Geoffrey42/xSniper)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Just a little CSV columns and cells utility.
 
