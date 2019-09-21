@@ -4,7 +4,6 @@
 
 import unittest
 import pytest
-import csv
 from unittest.mock import patch, mock_open
 from io import StringIO
 from xsniper.csv_file import CSVFile
