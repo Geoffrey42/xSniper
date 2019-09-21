@@ -1,6 +1,6 @@
 # xSniper
 
-[![Build Status](https://travis-ci.org/Geoffrey42/xSniper.svg?branch=develop)](https://travis-ci.org/Geoffrey42/xSniper)
+[![Build Status](https://travis-ci.com/Geoffrey42/xSniper.svg?branch=develop)](https://travis-ci.com/Geoffrey42/xSniper)
 [![codecov](https://codecov.io/gh/Geoffrey42/xSniper/branch/develop/graph/badge.svg)](https://codecov.io/gh/Geoffrey42/xSniper)
 [![Updates](https://pyup.io/repos/github/Geoffrey42/xSniper/shield.svg)](https://pyup.io/repos/github/Geoffrey42/xSniper/)
 [![Python 3](https://pyup.io/repos/github/Geoffrey42/xSniper/python-3-shield.svg)](https://pyup.io/repos/github/Geoffrey42/xSniper/)
