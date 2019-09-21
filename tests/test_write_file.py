@@ -4,6 +4,7 @@
 
 import unittest
 import pytest
+import csv
 from unittest.mock import patch, mock_open
 from io import StringIO
 from xsniper.csv_file import CSVFile
@@ -33,4 +34,6 @@ def test_write_called_with_content(set_csv_file):
     with patch('xsniper.csv_file.open', mock_open()) as mocked_file:
         got.write(fake_file_path)
 
-    mocked_file().write.assert_called_once_with(got.content)
+    called_number = mocked_file().write.call_count
+
+    assert called_number == 3
