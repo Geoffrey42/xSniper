@@ -8,6 +8,17 @@
 
 Just a little CSV columns and cells utility.
 
+
+## Table of Contents
+
+* [Prerequisites](#prerequisites)
+* [Installation](#installation)
+* [Usage](#usage)
+  * [From command line](#from-command-line)
+  * [Examples](#examples)
+* [Contributing](#contributing)
+* [License](#license)
+
 ## Prerequisites
 
 * [pip](https://pip.pypa.io/en/stable/)
