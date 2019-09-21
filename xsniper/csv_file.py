@@ -71,6 +71,15 @@ class CSVFile:
             if cell in row:
                 row.append(value)
 
+    def write(self, file_path):
+        """Write self.content to file path.
+
+        Args:
+            file_path: a string corresponding to file to edit.
+        """
+        with open(file_path, 'w') as file:
+            file.write(self.content)
+
     def add_value(self, cell, header, value):
         """Add a value (a cell) based on another cell in the same row
         and value's header.
