@@ -1,5 +1,7 @@
 # xSniper
 
+[![codecov](https://codecov.io/gh/Geoffrey42/xSniper/branch/develop/graph/badge.svg)](https://codecov.io/gh/Geoffrey42/xSniper)
+
 Just a little CSV columns and cells utility.
 
 ## Prerequisites
