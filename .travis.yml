@@ -1,0 +1,20 @@
+language: python
+python:
+  - "3.7"
+
+before_install:
+    - pip install -r requirements.txt
+jobs:
+  include:
+    - name: "Unit tests"
+      script: make test
+    - name: "Code coverage"
+      script: make cov
+      after_success:
+        - codecov
+    - name: "Linter"
+      script: make lint
+branches:
+  only:
+  - master
+  - develop
