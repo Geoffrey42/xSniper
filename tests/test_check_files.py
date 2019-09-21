@@ -17,7 +17,7 @@ def test_check_files_when_both_exist(fs):
     assert got == True
 
 def test_check_files_when_one_does_not_exist(fs):
-    """Should return True if both files exist."""
+    """Should return False if both files exist."""
     exist = "/var/data/src.csv"
     does_not_exist = "/var/data/target.csv"
 
