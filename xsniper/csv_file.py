@@ -32,7 +32,7 @@ class CSVFile:
 
     def __check_parameters(self, cell, header):
         if not cell or not header:
-            raise ValueError
+            raise ValueError('cell or header parameters are empty.')
 
     def __add_header(self, header):
         headers = self.content[0]
@@ -58,11 +58,11 @@ class CSVFile:
         header_index = self.__get_header_index(header)
 
         if header_index == -1:
-            raise ValueError
+            raise ValueError('header: ' + header + ' not found in content: ' + str(self.content))
         for row in self.content[1:]:
             if cell in row:
                 return row[header_index]
-        raise ValueError
+        raise ValueError('cell not found in content: ' + cell)
 
     def __edit_value(self, cell, value, header):
         header_index = self.__get_header_index(header)
