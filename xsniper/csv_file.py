@@ -13,8 +13,13 @@ class CSVFile:
     Attributes:
         csvFile: a simple csv reader or can be an io.StringIO.
     """
+
     def __init__(self, csvFile):
-        self.content = list(csv.reader(csvFile))
+        self.content = self.__format_content(csv.reader(csvFile))
+
+    def __format_content(self, reader):
+        result = [[cell.strip() for cell in row] for row in reader]
+        return result
 
     def __get_header_index(self, header):
         headers = self.content[0]
@@ -27,7 +32,7 @@ class CSVFile:
 
     def __check_parameters(self, cell, header):
         if not cell or not header:
-            raise ValueError
+            raise ValueError('cell or header parameters are empty.')
 
     def __add_header(self, header):
         headers = self.content[0]
@@ -53,11 +58,11 @@ class CSVFile:
         header_index = self.__get_header_index(header)
 
         if header_index == -1:
-            raise ValueError
+            raise ValueError('header: ' + header + ' not found in content: ' + str(self.content))
         for row in self.content[1:]:
             if cell in row:
                 return row[header_index]
-        raise ValueError
+        raise ValueError('cell not found in content: ' + cell)
 
     def __edit_value(self, cell, value, header):
         header_index = self.__get_header_index(header)
@@ -77,6 +82,7 @@ class CSVFile:
         Args:
             file_path: a string corresponding to file to edit.
         """
+
         with open(file_path, 'w') as file:
             writer = csv.writer(file)
             writer.writerows(self.content)
