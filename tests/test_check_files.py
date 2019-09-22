@@ -8,7 +8,6 @@ from .context import xsniper
 
 def test_check_files_when_both_exist(fs):
     """Should return True if both files exist."""
-
     test_files = ["/var/data/src.csv", "/var/data/target.csv"]
 
     for single_file in test_files:
@@ -19,7 +18,6 @@ def test_check_files_when_both_exist(fs):
 
 def test_check_files_when_one_does_not_exist(fs):
     """Should return False if both files exist."""
-
     exist = "/var/data/src.csv"
     does_not_exist = "/var/data/target.csv"
 

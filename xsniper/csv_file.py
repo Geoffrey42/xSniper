@@ -14,8 +14,7 @@ class CSVFile:
         csvFile: a simple csv reader or can be an io.StringIO.
     """
 
-    def __init__(self, csvFile, common_key):
-        self.common_key = common_key
+    def __init__(self, csvFile):
         self.content = self.__format_content(csv.reader(csvFile))
 
     def __format_content(self, reader):
@@ -31,49 +30,50 @@ class CSVFile:
         else:
             return header_index
 
-    def __check_parameters(self, header):
-        if not self.common_key or not header:
+    def __check_parameters(self, cell, header):
+        if not cell or not header:
             raise ValueError('cell or header parameters are empty.')
 
     def __add_header(self, header):
         headers = self.content[0]
         headers.append(header)
 
-    def get_value(self, header):
+    def get_value(self, cell, header):
         """Get a value (a cell) from its header and
         any other cell in the same row.
 
         Args:
+            cell: Any cell in targeted value's same row. Must not be empty.
             header: Targeted value's header. Must not be empty.
 
         Returns:
             A string corresponding to the targeted value.
 
         Raises:
-            ValueError: if a header an empty
+            ValueError: if cell is incorrect or header an empty
             string.
         """
 
-        self.__check_parameters(header)
+        self.__check_parameters(cell, header)
         header_index = self.__get_header_index(header)
 
         if header_index == -1:
             raise ValueError('header: ' + header + ' not found in content: ' + str(self.content))
         for row in self.content[1:]:
-            if self.common_key in row:
+            if cell in row:
                 return row[header_index]
-        raise ValueError('cell not found in content: ' + self.common_key)
+        raise ValueError('cell not found in content: ' + cell)
 
-    def __edit_value(self, value, header):
+    def __edit_value(self, cell, value, header):
         header_index = self.__get_header_index(header)
 
         for row in self.content:
-            if self.common_key in row:
+            if cell in row:
                 row[header_index] = value
 
-    def __append_value(self, value):
+    def __append_value(self, cell, value):
         for row in self.content:
-            if self.common_key in row:
+            if cell in row:
                 row.append(value)
 
     def write(self, file_path):
@@ -87,22 +87,23 @@ class CSVFile:
             writer = csv.writer(file)
             writer.writerows(self.content)
 
-    def add_value(self, header, value):
+    def add_value(self, cell, header, value):
         """Add a value (a cell) based on another cell in the same row
         and value's header.
 
         Args:
+            cell: Any cell in targeted value's same row.
             header: Targeted value's header.
 
         Raises:
-            ValueError: if header is an empty
+            ValueError: if cell is incorrect or header an empty
             string.
         """
 
-        self.__check_parameters(header)
+        self.__check_parameters(cell, header)
         headers = self.content[0]
         if header in headers:
-            self.__edit_value(value, header)
+            self.__edit_value(cell, value, header)
         else:
             self.__add_header(header)
-            self.__append_value(value)
+            self.__append_value(cell, value)

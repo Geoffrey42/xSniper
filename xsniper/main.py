@@ -33,8 +33,8 @@ def perform_cell(args, src, target):
         src with some value from target.
     """
 
-    value = target.get_value(args["--target-header"])
-    src.add_value(args["<value-header>"], value)
+    value = target.get_value(args["<common-key>"], args["--target-header"])
+    src.add_value(args["<common-key>"], args["<value-header>"], value)
     return src
 
 if __name__ == "__main__":
@@ -43,8 +43,8 @@ if __name__ == "__main__":
     if helpers.check_files(args["<src.csv>"], args["<target.csv>"]):
         with open(args["<src.csv>"], 'rt') as src_file, \
             open(args["<target.csv>"], 'rt') as target_file:
-            src = CSVFile(src_file, args["<common-key>"])
-            target = CSVFile(target_file, args["<common-key>"])
+            src = CSVFile(src_file)
+            target = CSVFile(target_file)
 
     if args["cell"]:
         src = perform_cell(args, src, target)
