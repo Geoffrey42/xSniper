@@ -109,3 +109,4 @@ DS_Store
 .vscode/
 reports
 *.sh
+*.csv
