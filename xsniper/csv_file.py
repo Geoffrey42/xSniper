@@ -13,8 +13,13 @@ class CSVFile:
     Attributes:
         csvFile: a simple csv reader or can be an io.StringIO.
     """
+
     def __init__(self, csvFile):
-        self.content = list(csv.reader(csvFile))
+        self.content = self.__format_content(csv.reader(csvFile))
+
+    def __format_content(self, reader):
+        result = [[cell.strip() for cell in row] for row in reader]
+        return result
 
     def __get_header_index(self, header):
         headers = self.content[0]
