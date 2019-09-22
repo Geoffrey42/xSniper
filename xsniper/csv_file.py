@@ -82,6 +82,7 @@ class CSVFile:
         Args:
             file_path: a string corresponding to file to edit.
         """
+
         with open(file_path, 'w') as file:
             writer = csv.writer(file)
             writer.writerows(self.content)
