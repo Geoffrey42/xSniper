@@ -21,7 +21,6 @@ sys.path.append(path)
 
 from docopt import docopt
 from xsniper.csv_file import CSVFile
-from xsniper.helpers import check_files
 
 # pylint: skip-file
 
@@ -45,11 +44,9 @@ def perform_cell(args, src, target):
 if __name__ == "__main__":
     args = docopt(__doc__, version='xSniper 1.0')
 
-    if helpers.check_files(args["<src.csv>"], args["<target.csv>"]):
-        with open(args["<src.csv>"], 'rt') as src_file, \
-            open(args["<target.csv>"], 'rt') as target_file:
-            src = CSVFile(src_file, args["<common-key>"])
-            target = CSVFile(target_file, args["<common-key>"])
+    with open(args["<src.csv>"], 'rt') as src_file, open(args["<target.csv>"], 'rt') as target_file:
+       src = CSVFile(src_file, args["<common-key>"])
+       target = CSVFile(target_file, args["<common-key>"])
 
     if args["cell"]:
         src = perform_cell(args, src, target)
