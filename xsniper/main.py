@@ -14,6 +14,11 @@ Options:
     column          if -o is present: write entire <target-header>'s <target.csv> in <output.csv>. If not, write in <result.csv>
 """
 
+import os, sys
+
+path = os.path.dirname(os.path.dirname(__file__)) 
+sys.path.append(path)
+
 from docopt import docopt
 from xsniper.csv_file import CSVFile
 from xsniper.helpers import check_files
