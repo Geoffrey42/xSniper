@@ -14,9 +14,10 @@ class CSVFile:
         csvFile: a simple csv reader or can be an io.StringIO.
     """
 
-    def __init__(self, csvFile, common_key):
+    def __init__(self, csvFile, common_key=None):
         self.common_key = common_key
-        self.content = self.__format_content(csv.reader(csvFile))
+        if common_key != None:
+            self.content = self.__format_content(csv.reader(csvFile))
 
     def __format_content(self, reader):
         result = [[cell.strip() for cell in row] for row in reader]
@@ -106,3 +107,6 @@ class CSVFile:
         else:
             self.__add_header(header)
             self.__append_value(value)
+
+    def get_columns(*args):
+        raise ValueError("Header not found: " + str(args))
