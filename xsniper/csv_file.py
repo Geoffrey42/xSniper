@@ -147,5 +147,5 @@ class CSVFile:
         result = self.get_single_column(args[0])
         for arg in islice(args, 1, None, 1):
             column = self.get_single_column(arg)
-            result = pd.concat([result, column], ignore_index=True, axis=1)
+            result = pd.concat([result, column], ignore_index=False, axis=1)
         return result
