@@ -126,9 +126,9 @@ class CSVFile:
         """
 
         try:
-            result = self.df_content[args[0]]
-        except KeyError as error:
-            raise ValueError(error)
+            result = self.df_content[header]
+        except KeyError:
+            raise ValueError("Header not found: " + header)
         return result
 
     def get_columns(self, *args):
