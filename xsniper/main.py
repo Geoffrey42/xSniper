@@ -26,7 +26,8 @@ from xsniper.csv_file import CSVFile
 
 def perform_cell(args, src, target):
     """Execute xSniper in cell mode.
-    In this mode, xSniper add a value to an existing CSVFile (src) from another one (target).
+    In this mode, xSniper add a value to an existing CSVFile (src)
+    from another one (target).
 
     Args:
         args: docopt dictionnary.
