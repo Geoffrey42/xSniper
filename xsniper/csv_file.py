@@ -90,12 +90,12 @@ class CSVFile:
             file_path: a string corresponding to file to edit.
         """
 
-        with open(file_path, 'w') as file:
-            writer = csv.writer(file)
-            if self.df_content is None:
+        if self.df_content is None:
+            with open(file_path, 'w') as file:
+                writer = csv.writer(file)
                 writer.writerows(self.content)
-            else:
-                writer.writerows(self.df_content)
+        else:
+            self.df_content.to_csv(file_path, encoding='utf-8')
 
     def add_value(self, header, value):
         """Add a value (a cell) based on another cell in the same row
