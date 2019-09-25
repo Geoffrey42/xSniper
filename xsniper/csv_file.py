@@ -112,7 +112,7 @@ class CSVFile:
             self.__add_header(header)
             self.__append_value(value)
 
-    def get_single_column(self, *args):
+    def get_single_column(self, header):
         """Get a single column.
 
         Args:
