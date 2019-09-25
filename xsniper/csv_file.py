@@ -20,8 +20,10 @@ class CSVFile:
         self.common_key = common_key
         if common_key is not None:
             self.content = self.__format_content(csv.reader(csvFile))
+            self.df_content = None
         else:
             self.df_content = pd.read_csv(csvFile)
+            self.content = None
 
     def __format_content(self, reader):
         result = [[cell.strip() for cell in row] for row in reader]
@@ -90,7 +92,10 @@ class CSVFile:
 
         with open(file_path, 'w') as file:
             writer = csv.writer(file)
-            writer.writerows(self.content)
+            if self.df_content is None:
+                writer.writerows(self.content)
+            else:
+                writer.writerows(self.df_content)
 
     def add_value(self, header, value):
         """Add a value (a cell) based on another cell in the same row
