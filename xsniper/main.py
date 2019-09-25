@@ -42,15 +42,37 @@ def perform_cell(args, src, target):
     src.add_value(args["<value-header>"], value)
     return src
 
+def open_files(args, mode):
+    """Open both src and target csv files.
+
+    Args:
+        args: docopt dictionnary.
+        mode: string whom value can be either 'cell' or 'column.
+        Depending on prefered mode.
+
+    Returns:
+        src and target CSVFile objects.
+    """
+
+    with open(args["<src.csv>"], 'rt') as src_file, open(args["<target.csv>"], 'rt') as target_file:
+        if mode == "cell":
+            src = CSVFile(src_file, args["<common-key>"])
+            target = CSVFile(target_file, args["<common-key>"])
+            return src, target
+        elif mode == "column":
+            src = CSVFile(src_file)
+            target = CSVFile(target_file)
+            return src, target
+
 if __name__ == "__main__":
     args = docopt(__doc__, version='xSniper 1.0')
 
-    with open(args["<src.csv>"], 'rt') as src_file, open(args["<target.csv>"], 'rt') as target_file:
-       src = CSVFile(src_file, args["<common-key>"])
-       target = CSVFile(target_file, args["<common-key>"])
-
     if args["cell"]:
+        src, target = open_files(args, "cell")
         src = perform_cell(args, src, target)
+    elif args["column"]:
+        src, target = open_files(args, "column")
+        src = perform_column(args, src, target)
 
     if args["--output"]:
         src.write(args["--output"])
