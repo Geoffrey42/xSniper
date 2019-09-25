@@ -39,25 +39,3 @@ def test_write_called_with_content(set_csv_file):
     called_number = mocked_file().write.call_count
 
     assert called_number == 3
-
-def test_file_opened_in_w_mode_column_mode(set_csv_file):
-    """Should have opened a file in write mode when xSniper in column mode."""
-
-    got = xsniper.CSVFile(set_csv_file)
-    fake_file_path = "fake/file/path"
-    with patch('xsniper.csv_file.open', mock_open()) as mocked_file:
-        got.write(fake_file_path)
-    
-    mocked_file.assert_called_once_with(fake_file_path, 'w')
-
-def test_write_called_with_content_column_mode(set_csv_file):
-    """Should call write with content when xSniper in column mode."""
-
-    got = xsniper.CSVFile(set_csv_file)
-    fake_file_path = "fake/file/path"
-    with patch('xsniper.csv_file.open', mock_open()) as mocked_file:
-        got.write(fake_file_path)
-
-    called_number = mocked_file().write.call_count
-
-    assert called_number == 3
