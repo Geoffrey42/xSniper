@@ -149,3 +149,12 @@ class CSVFile:
             column = self.get_single_column(arg)
             result = pd.concat([result, column], ignore_index=False, axis=1)
         return result
+
+    def add_columns(self, columns):
+        """Add columns to self.df_content.
+
+        Args:
+            columns: pandas dataframe columns to add.
+        """
+
+        self.df_content = pd.concat([self.df_content, columns], ignore_index=False, axis=1)
