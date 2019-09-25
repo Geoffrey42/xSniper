@@ -5,8 +5,8 @@
 # pylint: disable=no-self-use
 
 import csv
-import pandas as pd
 from itertools import islice
+import pandas as pd
 
 class CSVFile:
     """A class built on top of csv module that allows cell search
@@ -18,7 +18,7 @@ class CSVFile:
 
     def __init__(self, csvFile, common_key=None):
         self.common_key = common_key
-        if common_key != None:
+        if common_key is not None:
             self.content = self.__format_content(csv.reader(csvFile))
         else:
             self.df_content = pd.read_csv(csvFile)
