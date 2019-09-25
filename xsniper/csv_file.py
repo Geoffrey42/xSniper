@@ -44,6 +44,18 @@ class CSVFile:
         headers = self.content[0]
         headers.append(header)
 
+    def __edit_value(self, value, header):
+        header_index = self.__get_header_index(header)
+
+        for row in self.content:
+            if self.common_key in row:
+                row[header_index] = value
+
+    def __append_value(self, value):
+        for row in self.content:
+            if self.common_key in row:
+                row.append(value)
+
     def get_value(self, header):
         """Get a value (a cell) from its header and
         any other cell in the same row.
@@ -68,18 +80,6 @@ class CSVFile:
             if self.common_key in row:
                 return row[header_index]
         raise ValueError('cell not found in content: ' + self.common_key)
-
-    def __edit_value(self, value, header):
-        header_index = self.__get_header_index(header)
-
-        for row in self.content:
-            if self.common_key in row:
-                row[header_index] = value
-
-    def __append_value(self, value):
-        for row in self.content:
-            if self.common_key in row:
-                row.append(value)
 
     def write(self, file_path):
         """Write self.content to file path.
