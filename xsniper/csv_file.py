@@ -5,6 +5,8 @@
 # pylint: disable=no-self-use
 
 import csv
+import pandas as pd
+from itertools import islice
 
 class CSVFile:
     """A class built on top of csv module that allows cell search
@@ -18,6 +20,8 @@ class CSVFile:
         self.common_key = common_key
         if common_key != None:
             self.content = self.__format_content(csv.reader(csvFile))
+        else:
+            self.df_content = pd.read_csv(csvFile)
 
     def __format_content(self, reader):
         result = [[cell.strip() for cell in row] for row in reader]
@@ -108,5 +112,40 @@ class CSVFile:
             self.__add_header(header)
             self.__append_value(value)
 
-    def get_columns(*args):
-        raise ValueError("Header not found: " + str(args))
+    def get_single_column(self, *args):
+        """Get a single column.
+
+        Args:
+            header: Desired headers.
+
+        Returns:
+            The desired columns in pandas dataframe format.
+
+        Raises:
+            ValueError: if header not found.
+        """
+
+        try:
+            result = self.df_content[args[0]]
+        except KeyError as error:
+            raise ValueError(error)
+        return result
+
+    def get_columns(self, *args):
+        """Get wholes columns.
+
+        Args:
+            header: Desired headers.
+
+        Returns:
+            The desired columns in pandas dataframe format.
+
+        Raises:
+            ValueError: if header not found.
+        """
+
+        result = self.get_single_column(args[0])
+        for arg in islice(args, 1, None, 1):
+            column = self.get_single_column(arg)
+            result = pd.concat([result, column], ignore_index=True, axis=1)
+        return result
