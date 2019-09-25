@@ -42,6 +42,30 @@ def perform_cell(args, src, target):
     src.add_value(args["<value-header>"], value)
     return src
 
+def perform_column(args, src, target):
+    """Execute xSniper in column mode.
+    In this mode, xSniper add a single or several columns to an existing
+    CSVFile (src) from another one (target).
+
+    Args:
+        args: docopt dictionnary.
+        src: CSVFile object containing <src.csv>.
+        target: CSVFile object containing <target.csv>
+
+    Returns:
+        src with some columns from target.
+    """
+    
+    if args['-a'] or args['--all']:
+        columns = target.df_content
+    elif len(args['<target-header>']) > 1:
+        columns = target.get_columns(args['<target-header>'])
+    else:
+        columns = target.get_single_column(args['<target-header>'])
+    src.add_columns(columns)
+
+    return src
+
 def open_files(args, mode):
     """Open both src and target csv files.
 
