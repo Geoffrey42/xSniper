@@ -46,7 +46,7 @@ cell4,cell5,cell6""")
     h2 = df['header2']
     h3 = df['header3']
 
-    want = pd.concat([h2, h3], ignore_index=True, axis=1)
+    want = pd.concat([h2, h3], ignore_index=False, axis=1)
     got = test_src.get_columns('header2', 'header3')
     assert got.equals(want)
 
