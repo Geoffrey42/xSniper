@@ -5,6 +5,8 @@
 # pylint: disable=no-self-use
 
 import csv
+from itertools import islice
+import pandas as pd
 
 class CSVFile:
     """A class built on top of csv module that allows cell search
@@ -14,9 +16,14 @@ class CSVFile:
         csvFile: a simple csv reader or can be an io.StringIO.
     """
 
-    def __init__(self, csvFile, common_key):
+    def __init__(self, csvFile, common_key=None):
         self.common_key = common_key
-        self.content = self.__format_content(csv.reader(csvFile))
+        if common_key is not None:
+            self.content = self.__format_content(csv.reader(csvFile))
+            self.df_content = None
+        else:
+            self.df_content = pd.read_csv(csvFile)
+            self.content = None
 
     def __format_content(self, reader):
         result = [[cell.strip() for cell in row] for row in reader]
@@ -38,6 +45,18 @@ class CSVFile:
     def __add_header(self, header):
         headers = self.content[0]
         headers.append(header)
+
+    def __edit_value(self, value, header):
+        header_index = self.__get_header_index(header)
+
+        for row in self.content:
+            if self.common_key in row:
+                row[header_index] = value
+
+    def __append_value(self, value):
+        for row in self.content:
+            if self.common_key in row:
+                row.append(value)
 
     def get_value(self, header):
         """Get a value (a cell) from its header and
@@ -64,18 +83,6 @@ class CSVFile:
                 return row[header_index]
         raise ValueError('cell not found in content: ' + self.common_key)
 
-    def __edit_value(self, value, header):
-        header_index = self.__get_header_index(header)
-
-        for row in self.content:
-            if self.common_key in row:
-                row[header_index] = value
-
-    def __append_value(self, value):
-        for row in self.content:
-            if self.common_key in row:
-                row.append(value)
-
     def write(self, file_path):
         """Write self.content to file path.
 
@@ -83,9 +90,12 @@ class CSVFile:
             file_path: a string corresponding to file to edit.
         """
 
-        with open(file_path, 'w') as file:
-            writer = csv.writer(file)
-            writer.writerows(self.content)
+        if self.df_content is None:
+            with open(file_path, 'w') as file:
+                writer = csv.writer(file)
+                writer.writerows(self.content)
+        else:
+            self.df_content.to_csv(file_path, encoding='utf-8')
 
     def add_value(self, header, value):
         """Add a value (a cell) based on another cell in the same row
@@ -106,3 +116,50 @@ class CSVFile:
         else:
             self.__add_header(header)
             self.__append_value(value)
+
+    def get_single_column(self, header):
+        """Get a single column.
+
+        Args:
+            header: Desired headers.
+
+        Returns:
+            The desired columns in pandas dataframe format.
+
+        Raises:
+            ValueError: if header not found.
+        """
+
+        try:
+            result = self.df_content[header]
+        except KeyError:
+            raise ValueError("Header not found: " + header)
+        return result
+
+    def get_columns(self, *args):
+        """Get wholes columns.
+
+        Args:
+            header: Desired headers.
+
+        Returns:
+            The desired columns in pandas dataframe format.
+
+        Raises:
+            ValueError: if header not found.
+        """
+
+        result = self.get_single_column(args[0])
+        for arg in islice(args, 1, None, 1):
+            column = self.get_single_column(arg)
+            result = pd.concat([result, column], ignore_index=False, axis=1)
+        return result
+
+    def add_columns(self, columns):
+        """Add columns to self.df_content.
+
+        Args:
+            columns: pandas dataframe columns to add.
+        """
+
+        self.df_content = pd.concat([self.df_content, columns], ignore_index=False, axis=1)

@@ -26,7 +26,8 @@ from xsniper.csv_file import CSVFile
 
 def perform_cell(args, src, target):
     """Execute xSniper in cell mode.
-    In this mode, xSniper add a value to an existing CSVFile (src) from another one (target).
+    In this mode, xSniper add a value to an existing CSVFile (src)
+    from another one (target).
 
     Args:
         args: docopt dictionnary.
@@ -41,15 +42,61 @@ def perform_cell(args, src, target):
     src.add_value(args["<value-header>"], value)
     return src
 
+def perform_column(args, src, target):
+    """Execute xSniper in column mode.
+    In this mode, xSniper add a single or several columns to an existing
+    CSVFile (src) from another one (target).
+
+    Args:
+        args: docopt dictionnary.
+        src: CSVFile object containing <src.csv>.
+        target: CSVFile object containing <target.csv>
+
+    Returns:
+        src with some columns from target.
+    """
+    
+    if args['-a'] or args['--all']:
+        columns = target.df_content
+    elif len(args['<target-header>']) > 1:
+        columns = target.get_columns(args['<target-header>'])
+    else:
+        columns = target.get_single_column(args['<target-header>'])
+    src.add_columns(columns)
+
+    return src
+
+def open_files(args, mode):
+    """Open both src and target csv files.
+
+    Args:
+        args: docopt dictionnary.
+        mode: string whom value can be either 'cell' or 'column.
+        Depending on prefered mode.
+
+    Returns:
+        src and target CSVFile objects.
+    """
+
+    with open(args["<src.csv>"], 'rt') as src_file, open(args["<target.csv>"], 'rt') as target_file:
+        if mode == "cell":
+            src = CSVFile(src_file, args["<common-key>"])
+            target = CSVFile(target_file, args["<common-key>"])
+            return src, target
+        elif mode == "column":
+            src = CSVFile(src_file)
+            target = CSVFile(target_file)
+            return src, target
+
 if __name__ == "__main__":
     args = docopt(__doc__, version='xSniper 1.0')
 
-    with open(args["<src.csv>"], 'rt') as src_file, open(args["<target.csv>"], 'rt') as target_file:
-       src = CSVFile(src_file, args["<common-key>"])
-       target = CSVFile(target_file, args["<common-key>"])
-
     if args["cell"]:
+        src, target = open_files(args, "cell")
         src = perform_cell(args, src, target)
+    elif args["column"]:
+        src, target = open_files(args, "column")
+        src = perform_column(args, src, target)
 
     if args["--output"]:
         src.write(args["--output"])
